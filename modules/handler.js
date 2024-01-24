@@ -11,9 +11,10 @@ const {
 } = require("@adiwajshing/baileys");
 const fs = require("fs");
 const util = require("util");
-const write = require("./console");
-const config = require("./config")
-const db = require("./db.json")
+const write = require("../modules/console");
+const config = require("../shop/config")
+const db = require("../shop/db.json")
+const articles = require('../shop/articles.json');
 const exec = require('child_process').exec
 var save = true;
 module.exports = handler = async (m, client) => {
@@ -70,13 +71,13 @@ module.exports = handler = async (m, client) => {
 				if(!db.groups.map(k => k.id).includes(groupMetadata.id)){
 					write("New Group "+groupName, "grn", 1)
 					db.groups.push(groupMetadata)
-					writeJson("./db.json", db)	
+					writeJson("shop/db.json", db)	
 				}
 			}
 			if(!db.users.map(k => k.id).includes(from)){
 				write("New User "+ pushname, "grn", 1)
 				db.users.push({"id":from, "name":pushname})
-				writeJson("./db.json", db)
+				writeJson("shop/db.json", db)
 			}
 		}
 
@@ -89,12 +90,7 @@ const commands = {
                 reply(this.help)
                 return this.help
             }
-			a=chat.toString()
-			b=pushname.toString();
-			if(a==="59163388267@s.whatsapp.net"){
-				b="amor <3"
-			}
-            reply('Hola '+b);
+            reply('🌱 Hola '+pushname+" 🌱");
         }
     }),
 	tag:(args=[])=>({
@@ -108,7 +104,7 @@ const commands = {
             if(isAdmin) client.sendMessage(chat , {text:text, mentions:participants})
         }
     }),
-	info:({args=[]})=>({
+	info:(args=[])=>({
         args,
 		help:"Muestra la informacion del servidor",
         run(){
@@ -125,6 +121,36 @@ const commands = {
     	    reply(info);
         }
     }),
+	lista:(args=[])=>({
+		args,
+		help:"Muestra la lista de plantitas disponibles",
+		run(){
+            if(this.args[0]=="-h"){reply(this.help); return;}
+			i=1;
+			strList="";
+			articles.map(k=>{
+				strList=strList.concat("🌱  "+ i + " : ");
+				strList=strList.concat(k.name + " 🌱\n")
+				i++;
+			});
+			reply(strList);
+		}
+	}),
+	ver:(args=[])=>({
+		args,
+		help:"Muestra una plantita",
+		run(){
+            if(this.args[0]=="-h"){reply(this.help); return;}
+			if(this.args[0]>articles.length) return;
+			article=articles[args[0]-1];
+			strMsg="> ```🌱 Nombre:``` \n\t\t" + article.name;
+			strMsg=strMsg.concat("\n> ```🌱 Precio:``` \n\t\tBs. " + article.price);
+			strMsg=strMsg.concat("\n> ```🌱 Nombre Cientifico:``` \n\t\t" + article.scientificName);
+			strMsg=strMsg.concat("\n> ```🌵 CUIDADOS 🌵```\n\t_" + article.cuidados+"_");
+			client.sendMessage(chat, {image:{url:"media/"+article.picture}, caption:strMsg})
+		}
+	}),
+
 	menu:(args=[])=>({
     	args,
     	help:"Muestra la lista de comandos disponibles",

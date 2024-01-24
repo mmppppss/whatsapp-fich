@@ -13,7 +13,7 @@ const fs = require("fs");
 const axios = require("axios");
 const _ = require("lodash");
 const write = require("./modules/console");
-const handler = require("./modules/handler")
+//const handler = require("./modules/handler")
 const config = require("./shop/config");
 
 async function connectWa() {
@@ -34,8 +34,8 @@ async function connectWa() {
 			if (msg.key && msg.key.remoteJid === "status@broadcast") return;
 			if (!client.public && !msg.key.fromMe && chatUpdate.type === "notify") return;
 			if (msg.key.id.startsWith("BAE5") && msg.key.id.length === 16) return;
-    		//require("./handler")(msg, client)
-			handler(msg, client);
+    		require("./modules/handler")(msg, client)
+			//handler(msg, client);
     	} catch (err) {
     		write(err, "red", 2);
 		}
