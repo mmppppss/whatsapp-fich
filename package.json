@@ -13,6 +13,6 @@
     	"@adiwajshing/baileys": "github:WhiskeySockets/Baileys",
     	"@adiwajshing/keyed-db": "^0.2.4",
     	"lodash": "^4.17.21",
-    	"qrcode-terminal": "^0.12.0",
+    	"qrcode-terminal": "^0.12.0"
 	}
 }

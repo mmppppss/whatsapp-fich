@@ -317,6 +317,71 @@
           "admin": null
         }
       ]
+    },
+    {
+      "id": "120363180489734029@g.us",
+      "subject": "Stickers",
+      "subjectOwner": "5491157339352@s.whatsapp.net",
+      "subjectTime": 1695123700,
+      "size": 13,
+      "creation": 1695123700,
+      "owner": "5491157339352@s.whatsapp.net",
+      "restrict": false,
+      "announce": false,
+      "participants": [
+        {
+          "id": "12092272060@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "19095388702@s.whatsapp.net",
+          "admin": "admin"
+        },
+        {
+          "id": "50256158012@s.whatsapp.net",
+          "admin": "admin"
+        },
+        {
+          "id": "50584701161@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "50588114720@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "51901366798@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "51969331858@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "5491137830073@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "5491157339352@s.whatsapp.net",
+          "admin": "superadmin"
+        },
+        {
+          "id": "5493794796042@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "56930822464@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "56986186339@s.whatsapp.net",
+          "admin": null
+        },
+        {
+          "id": "59167786908@s.whatsapp.net",
+          "admin": null
+        }
+      ]
     }
   ]
 }

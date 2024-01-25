@@ -64,7 +64,7 @@ module.exports = handler = async (m, client) => {
 			write(msgLog+" From "+pushname+` [${from.replace("@s.whatsapp.net", "")}]`+" IN " +groupName, "ylw", 1);
     	}
 		async function reply(txt){
-			await client.sendMessage(chat, { text: txt});
+			await client.sendMessage(chat, { text: txt}, {quoted:m});
 		}
 		if(save && isCmd){
 			if(isGroup){
@@ -150,7 +150,38 @@ const commands = {
 			client.sendMessage(chat, {image:{url:"media/"+article.picture}, caption:strMsg})
 		}
 	}),
+	add:(args=[])=>({
+		args,
+		help:"Agrega un articulo\nEjemplo:\n\t/add nombre, precio, nombre cientifico, cuidados",
+		run(){
+            if(this.args[0]=="-h"){reply(this.help); return;}
+			id=Math.floor(Math.random()*100)
+			param=text.split(", ")
+			json={
+				"id": id,
+				"price": param[1],
+				"name": param[0],
+				"picture": "plant.jpg",
+				"scientificName": param[2],
+				"anotherNames": "voidplant goodPlant",
+				"cuidados": param[3]
+			}
+			articles.push(json)
+			writeJson("shop/articles.json", articles)
+			reply("Articulo agregado con exito");
+		}
+	}),
+	del:(args=[])=>({
+		args,
+		help:"elimina un articulo\nEjemplo\n\t/del 1",
+		run(){
+			if(this.args[0]=="-h"){reply(this.help); return;}
+			articles.splice(args[0]-1,1)
+			writeJson("shop/articles.json", articles)
+			reply("Articulo eliminado con exito");
 
+		}
+	}),
 	menu:(args=[])=>({
     	args,
     	help:"Muestra la lista de comandos disponibles",
@@ -161,7 +192,7 @@ const commands = {
             }
             let menutext=""
             for(key in commands){
-                help=commands[key]({}).help;
+                help=commands[key]({}).help.split("\n")[0];
                 menutext=menutext.concat(prefix+key+"\t```"+help+"```\n")
             }
             reply(menutext)
