@@ -240,9 +240,26 @@ const commands = {
                 return this.help
             }
 			if(!isOwner) return
-			db.users.map(user => {
-				client.sendMessage(user.id, {text: text } )
-			})
+			msg = {
+				text:text
+			}
+			if(type=="imageMessage"){
+				image="img"+Math.floor(Math.random()*1000)
+				saveImage(m, image); 
+				msg={
+					image:{
+						url:"./shop/media/"+image+".jpeg",
+					},
+					caption: text
+				}
+			}
+
+			setTimeout(()=>{
+				db.users.map(user => {
+					client.sendMessage(user.id, msg);
+				})
+				reply("Trasmision completa a "+db.users.length+" usuarios")
+			}, 200)//espera 0.2 segundos para que se descargue la imagen
         }
     })
 }
