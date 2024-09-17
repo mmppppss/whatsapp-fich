@@ -166,34 +166,37 @@ const commands = {
 	}),
 	ver:(args=[])=>({
 		args,
-		help:"Muestra una plantita",
+		help:"Muestra un articulo",
 		run(){
             if(this.args[0]=="-h"){reply(this.help); return;}
 			if(this.args[0]>articles.length) return;
 			article=articles[args[0]-1];
 			strMsg="> ```🌱 Nombre:``` \n\t\t" + article.name;
 			strMsg=strMsg.concat("\n> ```🌱 Precio:``` \n\t\tBs. " + article.price);
-			strMsg=strMsg.concat("\n> ```🌱 Nombre Cientifico:``` \n\t\t" + article.scientificName);
-			strMsg=strMsg.concat("\n> ```🌵 CUIDADOS 🌵```\n\t_" + article.cuidados+"_");
-			client.sendMessage(chat, {image:{url:"media/"+article.picture}, caption:strMsg})
+			strMsg=strMsg.concat("\n\t_" + article.descripcion+"_");
+			client.sendMessage(chat, {image:{url:"shop/media/"+article.picture}, caption:strMsg})
 		}
 	}),
 	add:(args=[])=>({
 		args,
-		help:"Agrega un articulo\nEjemplo:\n\t/add nombre, precio, nombre cientifico, cuidados",
+		help:"Agrega un articulo\nEjemplo:\n\t/add nombre, precio, descripcion",
 		run(){
             if(this.args[0]=="-h"){reply(this.help); return;}
 			if(!isOwner) return
+
 			id=Math.floor(Math.random()*100)
 			param=text.split(", ")
+			picture="test"
+			if(type=="imageMessage"){
+				picture=param[0].replaceAll(" ","")
+				saveImage(m,picture)
+			}
 			json={
 				"id": id,
 				"price": param[1],
 				"name": param[0],
-				"picture": "plant.jpg",
-				"scientificName": param[2],
-				"anotherNames": "voidplant goodPlant",
-				"cuidados": param[3]
+				"picture": picture+".jpeg",
+				"descripcion": param[2]
 			}
 			articles.push(json)
 			writeJson("shop/articles.json", articles)
