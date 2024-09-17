@@ -7,9 +7,11 @@ const {
 	generateWAMessage,
 	prepareWAMessageMedia,
 	areJidsSameUser,
-	getContentType 
+	getContentType,
+	downloadMediaMessage
 } = require("@adiwajshing/baileys");
 const fs = require("fs");
+
 const util = require("util");
 const write = require("../modules/console");
 const config = require("../shop/config")
@@ -91,6 +93,28 @@ const commands = {
                 return this.help
             }
             reply('🌱 Hola '+pushname+" 🌱");
+        }
+    }),
+	save:(args=[])=>({
+    	args,
+    	help:"guarda una imagen en la carpeta de imagenes",
+    	run(){
+        	if(this.args[0]=="-h"){
+                reply(this.help)
+                return this.help
+            }
+			const buffer = downloadMediaMessage(
+				m,
+				'buffer',
+				{ },
+				{ 
+					// pass this so that baileys can request a reupload of media
+					// that has been deleted
+					reuploadRequest: client.updateMediaMessage
+				}
+			)
+			// save to file
+			fs.writeFileSync('./my-download.jpeg', buffer)
         }
     }),
 	tag:(args=[])=>({
