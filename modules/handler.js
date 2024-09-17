@@ -7,9 +7,11 @@ const {
 	generateWAMessage,
 	prepareWAMessageMedia,
 	areJidsSameUser,
-	getContentType 
+	getContentType,
+	downloadMediaMessage
 } = require("@adiwajshing/baileys");
 const fs = require("fs");
+const {writeFile} = require('fs/promises');
 const util = require("util");
 const write = require("../modules/console");
 const config = require("../shop/config")
@@ -80,6 +82,21 @@ module.exports = handler = async (m, client) => {
 				writeJson("shop/db.json", db)
 			}
 		}
+async function saveImage(m, name){
+	const buffer = await downloadMediaMessage(
+				m,
+				'buffer'
+				/*{ },
+				{ 
+					// pass this so that baileys can request a reupload of media
+					// that has been deleted
+					//reuploadRequest: client.updateMediaMessage
+				}*/
+			)
+			// save to file
+			await writeFile('./shop/media/'+name+'.jpeg', buffer);
+			}
+
 
 const commands = {
 	hola:(args=[])=>({
@@ -92,6 +109,17 @@ const commands = {
             }
             reply('🌱 Hola '+pushname+" 🌱");
         }
+    }),
+	save:(args=[])=>({
+    	args,
+    	help:"guarda una imagen en la carpeta de imagenes",
+    	run(){
+        	if(this.args[0]=="-h"){
+                reply(this.help)
+                return this.help
+            }
+			saveImage(m, args[0])
+		}
     }),
 	tag:(args=[])=>({
     	args,
