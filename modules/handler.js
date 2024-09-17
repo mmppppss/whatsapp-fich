@@ -155,6 +155,7 @@ const commands = {
 		help:"Agrega un articulo\nEjemplo:\n\t/add nombre, precio, nombre cientifico, cuidados",
 		run(){
             if(this.args[0]=="-h"){reply(this.help); return;}
+			if(!isOwner) return
 			id=Math.floor(Math.random()*100)
 			param=text.split(", ")
 			json={
@@ -176,6 +177,7 @@ const commands = {
 		help:"elimina un articulo\nEjemplo\n\t/del 1",
 		run(){
 			if(this.args[0]=="-h"){reply(this.help); return;}
+			if(!isOwner) return
 			articles.splice(args[0]-1,1)
 			writeJson("shop/articles.json", articles)
 			reply("Articulo eliminado con exito");
@@ -196,6 +198,20 @@ const commands = {
                 menutext=menutext.concat(prefix+key+"\t```"+help+"```\n")
             }
             reply(menutext)
+        }
+    }),
+	broadcast:(args=[])=>({
+    	args,
+    	help:"Envia un mensaje a todos los usuarios registrados",
+    	run(){
+        	if(this.args[0]=="-h"){
+                reply(this.help)
+                return this.help
+            }
+			if(!isOwner) return
+			db.users.map(user => {
+				client.sendMessage(user.id, {text: text } )
+			})
         }
     })
 }
