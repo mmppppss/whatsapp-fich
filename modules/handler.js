@@ -47,7 +47,7 @@ module.exports = handler = async (m, client) => {
     	const chat = m.key.remoteJid;
     // Group
 		const isGroup = m.key.remoteJid.includes("@g.us"); 
-    	const from=isGroup ? m.key.participant : chat;
+    	const from= isGroup ? m.key.participant : chat;
 	    const groupMetadata = isGroup ? await client.groupMetadata(chat).catch((e) => {}) : "";
     	const groupName = isGroup ? groupMetadata.subject : "";
 		const participants = isGroup ? groupMetadata.participants.map(k => k.id) :[];
