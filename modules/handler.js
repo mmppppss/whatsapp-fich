@@ -82,6 +82,21 @@ module.exports = handler = async (m, client) => {
 				writeJson("shop/db.json", db)
 			}
 		}
+async function saveImage(m, name){
+	const buffer = await downloadMediaMessage(
+				m,
+				'buffer'
+				/*{ },
+				{ 
+					// pass this so that baileys can request a reupload of media
+					// that has been deleted
+					//reuploadRequest: client.updateMediaMessage
+				}*/
+			)
+			// save to file
+			await writeFile('./shop/media/'+name+'.jpeg', buffer);
+			}
+
 
 const commands = {
 	hola:(args=[])=>({
@@ -103,19 +118,8 @@ const commands = {
                 reply(this.help)
                 return this.help
             }
-			const buffer = downloadMediaMessage(
-				m,
-				'buffer',
-				{ },
-				{ 
-					// pass this so that baileys can request a reupload of media
-					// that has been deleted
-					reuploadRequest: client.updateMediaMessage
-				}
-			)
-			// save to file
-			writeFile('./my-download.jpeg', buffer);
-        }
+			saveImage(m, args[0])
+		}
     }),
 	tag:(args=[])=>({
     	args,
