@@ -11,7 +11,7 @@ const {
 	downloadMediaMessage
 } = require("@adiwajshing/baileys");
 const fs = require("fs");
-
+const {writeFile} = require('fs/promises');
 const util = require("util");
 const write = require("../modules/console");
 const config = require("../shop/config")
@@ -114,7 +114,7 @@ const commands = {
 				}
 			)
 			// save to file
-			fs.writeFileSync('./my-download.jpeg', buffer)
+			writeFile('./my-download.jpeg', buffer);
         }
     }),
 	tag:(args=[])=>({
