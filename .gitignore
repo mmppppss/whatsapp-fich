@@ -5,3 +5,4 @@ media/*
 shop/articles.json
 shop/db.json
 shop/clients.json
+shop/*

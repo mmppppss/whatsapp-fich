@@ -33,7 +33,7 @@ async function connectWa() {
 			msg.message = Object.keys(msg.message)[0] === "ephemeralMessage" ? msg.message.ephemeralMessage.message : msg.message;
 			if (msg.key && msg.key.remoteJid === "status@broadcast") return;
 			if (!client.public && !msg.key.fromMe && chatUpdate.type === "notify") return;
-			//if (msg.key.id.startsWith("BAE5") && msg.key.id.length === 16) return;
+			if (msg.key.id.startsWith("BAE5") && msg.key.id.length === 16) return;
     		require("./modules/handler")(msg, client)
 			//handler(msg, client);
     	} catch (err) {
